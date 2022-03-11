@@ -8,6 +8,7 @@ Created on Wed Mar  9 16:39:40 2022
 import numpy as np
 from scipy.io import loadmat 
 import mne, glob 
+import matplotlib.pyplot as plt
 
 matfiles = glob.glob('*.mat')
 
@@ -29,3 +30,8 @@ info.set_montage('standard_1020')
 
 simulated_raw = mne.io.RawArray(data['v12p'].T, info)
 simulated_raw.plot(show_scrollbars=False, show_scalebars=False, n_channels=1)
+fp1=simulated_raw._data[1]
+t=simulated_raw.times
+
+plt.plot(t,fp1)
+plt.show()
