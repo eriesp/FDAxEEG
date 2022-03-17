@@ -9,6 +9,8 @@ import numpy as np
 from scipy.io import loadmat 
 import mne, glob 
 import matplotlib.pyplot as plt
+import neurokit2 as nk
+import pandas as pd
 
 matfiles = glob.glob('*.mat')
 
@@ -35,3 +37,14 @@ t=simulated_raw.times
 
 plt.plot(t,fp1)
 plt.show()
+
+power_bands=nk.eeg_power(fp1, sampling_rate=128, frequency_band=['Gamma', 'Beta', 'Alpha', 'Theta', 'Delta'])
+
+
+#Queste righe sono solo prove
+
+#events = mne.make_fixed_length_events(simulated_raw,id=1, start=0, duration=20)
+#epochs = mne.Epochs(simulated_raw, events, preload=True)
+
+#epochs.plot_psd(fmin=0., fmax=64., average=True, spatial_colors=False)
+#epochs.plot_psd_topomap(ch_type='eeg', normalize=False)
