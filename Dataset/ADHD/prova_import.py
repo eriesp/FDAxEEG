@@ -12,13 +12,13 @@ import matplotlib.pyplot as plt
 import neurokit2 as nk
 import pandas as pd
 import os
-import skfda
+#import skfda
 import scipy
 
-path_adhd = r"C:\Users\Asus\OneDrive\Desktop\NL2\FDAxEEG\Dataset\ADHD"
+path_adhd = r"C:\Users\erica\Documents\UNI\NECSTCamp\NL2\Project-git\FDAxEEG\Dataset\ADHD"
 matfiles_adhd = glob.glob(path_adhd + '/*.mat')
 
-path_control = r"C:\Users\Asus\OneDrive\Desktop\NL2\FDAxEEG\Dataset\Control"
+path_control = r"C:\Users\erica\Documents\UNI\NECSTCamp\NL2\Project-git\FDAxEEG\Dataset\Control"
 matfiles_control = glob.glob(path_control + '/*.mat')
 
 data_adhd = loadmat(matfiles_adhd[1])
