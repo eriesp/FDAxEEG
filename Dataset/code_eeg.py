@@ -15,11 +15,13 @@ import os
 import skfda
 import scipy
 
-path_adhd = r"C:\Users\Asus\OneDrive\Desktop\NL2\FDAxEEG\Dataset\ADHD"
-matfiles_adhd = glob.glob(path_adhd + '/*.mat')
+directory = os.getcwd()
 
-path_control = r"C:\Users\Asus\OneDrive\Desktop\NL2\FDAxEEG\Dataset\Control"
-matfiles_control = glob.glob(path_control + '/*.mat')
+path_adhd = "\ADHD"
+matfiles_adhd = glob.glob(directory + path_adhd + '/*.mat')
+
+path_control = "\Control"
+matfiles_control = glob.glob(directory + path_control + '/*.mat')
 
 data_adhd = loadmat(matfiles_adhd[1])
 data_control = loadmat(matfiles_control[1])
@@ -47,16 +49,16 @@ f_preica, Pxx_den_preica = scipy.signal.welch(fp1_preica, fs)
 P_log_preica=np.log(Pxx_den_preica)
 
 #FILTRI
-filt_raw = simulated_raw.copy().filter(l_freq=1., h_freq=50.)
+filt_raw = simulated_raw.copy().filter(l_freq=1., h_freq=40.)
 
 simulated_raw.plot_psd()
 filt_raw.plot_psd()
 
-ica = mne.preprocessing.ICA(n_components=19, random_state=0, max_iter=800)
+ica = mne.preprocessing.ICA(n_components=15, random_state=97, max_iter=800)
 ica.fit(filt_raw)
 ica.plot_components()
 # ica.exclude = [1, 2]
-# ica.plot_properties(simulated_raw, picks=ica.exclude)
+ica.plot_properties(simulated_raw) #picks=ica.exclude)
 
 # orig_raw = simulated_raw.copy()
 # simulated_raw.load_data()
