@@ -15,6 +15,8 @@ import os
 import skfda
 import scipy
 
+plt.ion
+
 directory = os.getcwd()
 
 path_adhd = "\ADHD"
@@ -54,11 +56,13 @@ filt_raw = simulated_raw.copy().filter(l_freq=1., h_freq=40.)
 simulated_raw.plot_psd()
 filt_raw.plot_psd()
 
-ica = mne.preprocessing.ICA(n_components=15, random_state=97, max_iter=800)
+ica = mne.preprocessing.ICA(n_components=0.9, random_state=97, max_iter=800)
 ica.fit(filt_raw)
 ica.plot_components()
-# ica.exclude = [1, 2]
-ica.plot_properties(simulated_raw) #picks=ica.exclude)
+#ica.exclude = [1, 2]
+ica.plot_properties(filt_raw, picks=np.arange(9))
+
+ica.plot_overlay(filt_raw, exclude=[0], picks='eeg')
 
 # orig_raw = simulated_raw.copy()
 # simulated_raw.load_data()
