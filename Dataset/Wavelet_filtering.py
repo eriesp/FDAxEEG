@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Apr  5 10:45:37 2022
+Created on Thu Apr  7 14:06:05 2022
 
 @author: Asus
 """
@@ -41,28 +41,11 @@ def impo(x):
         data_adhd = loadmat(matfiles_adhd[n])
         val=list(data_adhd.values())[3]
         raw = mne.io.RawArray(val.T, info)
-        raw_times=raw.times
-        raw_data=raw._data[x]
         filt_raw = raw.copy().filter(l_freq=0.5, h_freq=50.,method='iir', iir_params=None)
         data=filt_raw._data[x]
         times=filt_raw.times
         channel_adhd.append(data)
         t_adhd.append(times)
-        
-        mintime = 0
-        maxtime = mintime + 2000
-
-        plt.figure()
-        plt.subplot(2, 1, 1)
-        plt.plot(raw_times[mintime:maxtime], raw_data[mintime:maxtime])
-        plt.xlabel('time (s)')
-        plt.ylabel('microvolts (uV)')
-        plt.title("Raw signal")
-        plt.subplot(2, 1, 2)
-        plt.plot(times[mintime:maxtime], data[mintime:maxtime])
-        plt.xlabel('time (s)')
-        plt.ylabel('microvolts (uV)')
-        plt.title("De-noised signal with Butterworth")
         
     for n in np.arange(len(matfiles_control)):
         data_control = loadmat(matfiles_control[n])
@@ -77,11 +60,46 @@ def impo(x):
 
 channel_adhd, t_adhd, channel_control, t_control=impo(0)
 
+data=channel_adhd[0]
+index=t_adhd[0]
+
+# Create wavelet object and define parameters
+w = pywt.Wavelet('db2')
+maxlev = pywt.dwt_max_level(len(data), w.dec_len)
+# maxlev = 2 # Override if desired
+print("maximum level is " + str(maxlev))
+
+threshold = 0.04
+
+coeffs = pywt.wavedec(data, 'sym4', level=maxlev)
+
+#cA = pywt.threshold(cA, threshold*max(cA))
+plt.figure()
+for i in range(1, len(coeffs)):
+    plt.subplot(maxlev, 1, i)
+    plt.plot(coeffs[i])
+    #var=np.median(np.abs(coeffs[i]))/0.6745
+    #N=len(data)
+    # threshold = var*np.sqrt(2*np.log(N))
+    # coeffs[i] = pywt.threshold(coeffs[i], threshold)
+    coeffs[i] = pywt.threshold(coeffs[i], threshold*max(coeffs[i]))
+    plt.plot(coeffs[i])
 
 
+datarec = pywt.waverec(coeffs, 'sym4')
 
 
+mintime = 0
+maxtime = mintime + 2000
 
-
-
-
+plt.figure()
+plt.subplot(2, 1, 1)
+plt.plot(index[mintime:maxtime], data[mintime:maxtime])
+plt.xlabel('time (s)')
+plt.ylabel('microvolts (uV)')
+plt.title("Raw signal")
+plt.subplot(2, 1, 2)
+plt.plot(index[mintime:maxtime], datarec[mintime:maxtime])
+plt.xlabel('time (s)')
+plt.ylabel('microvolts (uV)')
+plt.title("De-noised signal")
