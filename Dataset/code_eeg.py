@@ -15,7 +15,6 @@ import os
 import skfda
 import scipy
 
-plt.ion
 
 directory = os.getcwd()
 
@@ -56,7 +55,7 @@ filt_raw = simulated_raw.copy().filter(l_freq=1., h_freq=40.)
 simulated_raw.plot_psd()
 filt_raw.plot_psd()
 
-ica = mne.preprocessing.ICA(n_components=0.9, random_state=97, max_iter=800)
+ica = mne.preprocessing.ICA(n_components=0.99, random_state=97, max_iter=800)
 ica.fit(filt_raw)
 ica.plot_components()
 #ica.exclude = [1, 2]

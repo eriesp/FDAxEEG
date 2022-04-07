@@ -17,7 +17,7 @@ import scipy
 import pywt
 import sys
 
-def diocristo(x):
+def impo(x):
     channel_names = ["Fp1", "Fp2","F3","F4","C3","C4","P3","P4","O1","O2","F7","F8","T7", 
                "T8", "P7","P8","Fz","Cz","Pz"] 
     directory = os.getcwd()
@@ -58,7 +58,7 @@ def diocristo(x):
         t_control.append(times)
     return channel_adhd, t_adhd, channel_control, t_control
 
-a,b,c,d=diocristo(0)
+a,b,c,d=impo(0)
 
 # simulated_raw = mne.io.RawArray(data_adhd['v12p'].T, info)
 # filt_raw = simulated_raw.copy().filter(l_freq=1., h_freq=None)
