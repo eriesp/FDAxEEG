@@ -1,7 +1,7 @@
-function c_dec = get_wt(data) 
+function c_dec = get_wt(data, channel) 
 
 
-[c,l] = wavedec(data(1,:),4,'db2');
+[c,l] = wavedec(data(channel,:),4,'db2');
 
 c1 = c(1:l(1));
 c2 = c((l(1)+1):(l(1)+l(2)));
