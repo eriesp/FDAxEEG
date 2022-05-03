@@ -48,8 +48,9 @@ function [c1, c2, c3, c4, c5] = get_matrices(ch, t_epoch, ALLEEG)
     c_paz = c_paz + 1;
 
     % ora continuo con gli altri pazienti
-
-    while c_paz <= 61
+    
+    % !!!!!! CAMBIARE LIMITE c_paz IN CASO SIANO DI CONTROLLO O ADHD
+    while c_paz <= 60
         data = ALLEEG(c_paz).data;
 
         n_epoch = floor(length(data)/l_epoch);
