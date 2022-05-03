@@ -25,7 +25,7 @@ data = ALLEEG(c_paz).data;
 n_epoch = floor(length(data)/l_epoch);
 
 jj = 1;
-sub_data = data((jj-1)*l_epoch + 1 : jj*l_epoch);
+sub_data = data(:,(jj-1)*l_epoch + 1 : jj*l_epoch);
 
 c_dec = get_wt(sub_data,ch);
 

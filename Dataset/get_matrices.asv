@@ -1,6 +1,6 @@
 % funzione che dato il canale mi trova le matricine delle componenti
 % wavelet
-function [c1, c2, c3, c4, c5] = get_matrices(ch, t_epoch, ALLEEG)
+function str_mat = get_matrices(ch, t_epoch, ALLEEG)
     
     l_epoch = t_epoch*128;   % numero punti per epoch
     
@@ -22,11 +22,11 @@ function [c1, c2, c3, c4, c5] = get_matrices(ch, t_epoch, ALLEEG)
 
     c_dec = get_wt(sub_data,ch);
 
-    c1 = c_dec.c1;
-    c2 = c_dec.c2;
-    c3 = c_dec.c3;
-    c4 = c_dec.c4;
-    c5 = c_dec.c5;
+    ch1_c1 = c_dec.c1;
+    ch1_c2 = c_dec.c2;
+    ch1_c3 = c_dec.c3;
+    ch1_c4 = c_dec.c4;
+    ch1_c5 = c_dec.c5;
 
     % i_mat = i_mat + 1;
 
@@ -36,11 +36,11 @@ function [c1, c2, c3, c4, c5] = get_matrices(ch, t_epoch, ALLEEG)
 
         c_dec = get_wt(sub_data,ch);
 
-        c1 = [c1; c_dec.c1];
-        c2 = [c2; c_dec.c2];
-        c3 = [c3; c_dec.c3];
-        c4 = [c4; c_dec.c4];
-        c5 = [c5; c_dec.c5];
+        ch1_c1 = [ch1_c1; c_dec.c1];
+        ch1_c2 = [ch1_c2; c_dec.c2];
+        ch1_c3 = [ch1_c3; c_dec.c3];
+        ch1_c4 = [ch1_c4; c_dec.c4];
+        ch1_c5 = [ch1_c5; c_dec.c5];
 
         % i_mat = i_mat + 1;
     end
@@ -60,11 +60,11 @@ function [c1, c2, c3, c4, c5] = get_matrices(ch, t_epoch, ALLEEG)
 
             c_dec = get_wt(sub_data,ch);
 
-            c1 = [c1; c_dec.c1];
-            c2 = [c2; c_dec.c2];
-            c3 = [c3; c_dec.c3];
-            c4 = [c4; c_dec.c4];
-            c5 = [c5; c_dec.c5];
+            ch1_c1 = [ch1_c1; c_dec.c1];
+            ch1_c2 = [ch1_c2; c_dec.c2];
+            ch1_c3 = [ch1_c3; c_dec.c3];
+            ch1_c4 = [ch1_c4; c_dec.c4];
+            ch1_c5 = [ch1_c5; c_dec.c5];
 
             % i_mat = i_mat + 1;
         end
@@ -73,6 +73,10 @@ function [c1, c2, c3, c4, c5] = get_matrices(ch, t_epoch, ALLEEG)
         
     end
     
-   
+    str_mat = struct('c1', ch1_c1, ...
+                    append('ch',string(ch),'c2', ch1_c2, ...
+                    append('ch',string(ch),'c3'), ch1_c3, ...
+                    append('ch',string(ch),'c4'), ch1_c4, ...
+                    append('ch',string(ch),'c5'), ch1_c5);
     
 end
