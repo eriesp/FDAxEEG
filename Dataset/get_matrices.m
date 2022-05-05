@@ -1,16 +1,24 @@
 % funzione che dato il canale mi trova le matricine delle componenti
 % wavelet
-function [c1, c2, c3, c4, c5] = get_matrices(ch, t_epoch, ALLEEG)
+function [c1, c2, c3, c4, c5, paz] = get_matrices(ch, t_epoch, ALLEEG, adhd)
+
+    if adhd == true
+        c_paz_limit = 61;
+    else
+        c_paz_limit = 60;
+    end
+   
+
+    paz = zeros(546,1);
     
     l_epoch = t_epoch*128;   % numero punti per epoch
     
     % estrarre data per ogni paziente
 
     c_paz = 1;  % contatore pazienti
-
-    % i_mat = 1;  % contatore riga delle matrici
-
-
+    
+    i_mat = 1;  % contatore riga per vettore paz
+    
     % creo matrici per il primo paziente e poi proseguo
 
     data = ALLEEG(c_paz).data;
@@ -28,7 +36,9 @@ function [c1, c2, c3, c4, c5] = get_matrices(ch, t_epoch, ALLEEG)
     c4 = c_dec.c4;
     c5 = c_dec.c5;
 
-    % i_mat = i_mat + 1;
+    paz(i_mat) = c_paz;
+    
+    i_mat = i_mat + 1;
 
     for jj = 2:n_epoch
 
@@ -42,7 +52,9 @@ function [c1, c2, c3, c4, c5] = get_matrices(ch, t_epoch, ALLEEG)
         c4 = [c4; c_dec.c4];
         c5 = [c5; c_dec.c5];
 
-        % i_mat = i_mat + 1;
+        paz(i_mat) = c_paz;
+        
+        i_mat = i_mat + 1;
     end
 
     c_paz = c_paz + 1;
@@ -50,7 +62,7 @@ function [c1, c2, c3, c4, c5] = get_matrices(ch, t_epoch, ALLEEG)
     % ora continuo con gli altri pazienti
     
     % !!!!!! CAMBIARE LIMITE c_paz IN CASO SIANO DI CONTROLLO O ADHD
-    while c_paz <= 60
+    while c_paz <= c_paz_limit
         data = ALLEEG(c_paz).data;
 
         n_epoch = floor(length(data)/l_epoch);
@@ -66,8 +78,10 @@ function [c1, c2, c3, c4, c5] = get_matrices(ch, t_epoch, ALLEEG)
             c3 = [c3; c_dec.c3];
             c4 = [c4; c_dec.c4];
             c5 = [c5; c_dec.c5];
+            
+            paz(i_mat) = c_paz;
 
-            % i_mat = i_mat + 1;
+            i_mat = i_mat + 1;
         end
 
         c_paz = c_paz + 1;

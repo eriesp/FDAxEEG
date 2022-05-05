@@ -3,14 +3,18 @@ function c_dec = get_wt(data, channel, figure)
     if nargin < 3
         figure =   false;
     end
-
-    [c,l] = wavedec(data(channel,:),4,'db2');
-
-    c1 = c(1:l(1));
-    c2 = c((l(1)+1):(l(1)+l(2)));
-    c3 = c((l(1)+l(2)+1):(sum(l(1:3))));
-    c4 = c((sum(l(1:3))+1):(sum(l(1:4))));
-    c5 = c((sum(l(1:4))+1):(sum(l(1:5))));
+    
+    waveletFunction = 'db2'; 
+    
+    [C,L] = wavedec(data(channel,:),4,waveletFunction);
+    
+    %C contiene la decomposizione in wavelet e L il numero di
+    %coefficiendi usati
+    c1 = wrcoef('d',C,L,waveletFunction,1);%32-64 [Hz] Gamma
+    c2 = wrcoef('d',C,L,waveletFunction,2);%16-32 [Hz] Beta
+    c3 = wrcoef('d',C,L,waveletFunction,3);%8-16 [Hz] Alfa
+    c4 = wrcoef('d',C,L,waveletFunction,4);%4-8 [Hz] Theta
+    c5 = wrcoef('a',C,L,waveletFunction,4);%0-4 [Hz] Delta
 
     c_dec = struct('c1',c1, 'c2',c2, 'c3',c3, 'c4',c4, 'c5',c5);
 
