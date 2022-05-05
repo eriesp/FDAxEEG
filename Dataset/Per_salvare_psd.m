@@ -59,7 +59,7 @@ clear
 
 for ch = 1:19
     
-    % comp 1
+    % comp 2
     filename = append('Control_Matrici_wavelettati/ch',string(ch),'_c1.mat');
     mat = load(filename).c1;
 
