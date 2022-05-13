@@ -19,9 +19,9 @@ from skfda.ml.classification import KNeighborsClassifier
 
 from sklearn.model_selection import (train_test_split, GridSearchCV,
                                      StratifiedShuffleSplit)
-
 import sklearn
 from sklearn.cluster import AgglomerativeClustering
+import scipy.integrate
 
 #canale=input('Canale: ')
 #banda=input('Banda: ')
@@ -89,7 +89,7 @@ for i in np.arange(1,2):
     
     Control_der.data_matrix=np.abs(Control_der.data_matrix)
     
-    Control_der.integrate()
+    #Int=scipy.integrate.simpson(Control_der.data_matrix[0], Control_der.grid_points[0])
     
     
     
