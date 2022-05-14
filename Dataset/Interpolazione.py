@@ -7,21 +7,25 @@ Created on Sat May  7 16:36:04 2022
 
 import numpy as np
 # import mne
+<<<<<<< HEAD
 from tqdm import tqdm
+=======
+# from tqdm import tqdm
+>>>>>>> e332a1278182cd8c6f441ffd3529425487478b1e
 import skfda
 import pandas as pd
-import os
-import matplotlib.pyplot as plt
-from skfda.exploratory.visualization import Boxplot
+# import os
+# import matplotlib.pyplot as plt
+# from skfda.exploratory.visualization import Boxplot
 from skfda.inference.anova import oneway_anova
 import scipy
-from skfda.ml.classification import KNeighborsClassifier
+# from skfda.ml.classification import KNeighborsClassifier
 
-from sklearn.model_selection import (train_test_split, GridSearchCV,
-                                     StratifiedShuffleSplit)
-import sklearn
-from sklearn.cluster import AgglomerativeClustering
-import scipy.integrate
+# from sklearn.model_selection import (train_test_split, GridSearchCV,
+#                                      StratifiedShuffleSplit)
+# import sklearn
+# from sklearn.cluster import AgglomerativeClustering
+#import scipy.integrate
 
 #canale=input('Canale: ')
 #banda=input('Banda: ')
@@ -53,7 +57,8 @@ import scipy.integrate
 #     Fp_ADHD.append(np.mean([Prefrontal[0][i], Prefrontal[1][i]],axis=0))
 
 #canale=input('Canale: ')
-banda=input('Banda: ')
+#banda=input('Banda: ')
+banda=str(1)
 p=[]
 for i in np.arange(1,2):
     canale=str(i)
@@ -88,6 +93,7 @@ for i in np.arange(1,2):
     Control_der.plot()
     
     Control_der.data_matrix=np.abs(Control_der.data_matrix)
+    a=Control_der.integrate()
     
     #Int=scipy.integrate.simpson(Control_der.data_matrix[0], Control_der.grid_points[0])
     
