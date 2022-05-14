@@ -6,7 +6,7 @@ Created on Sat May  7 16:36:04 2022
 """
 
 import numpy as np
-import mne
+# import mne
 from tqdm import tqdm
 import skfda
 import pandas as pd
