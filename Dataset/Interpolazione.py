@@ -7,11 +7,8 @@ Created on Sat May  7 16:36:04 2022
 
 import numpy as np
 # import mne
-<<<<<<< HEAD
 from tqdm import tqdm
-=======
 # from tqdm import tqdm
->>>>>>> e332a1278182cd8c6f441ffd3529425487478b1e
 import skfda
 import pandas as pd
 # import os
