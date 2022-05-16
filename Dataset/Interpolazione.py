@@ -21,9 +21,9 @@ import scipy
 
 #canale=input('Canale: ')
 #banda=input('Banda: ')
-banda=str(5)
+banda=str(1)
 p=[]
-for i in np.arange(1,8):
+for i in np.arange(1,2):
     canale=str(i)
     filename_adhd = r"C:\Users\Asus\OneDrive\Desktop\NL2\FDAxEEG\Dataset\ADHD_Matrici_medie\zona"+canale+"_p"+banda
     mat = scipy.io.loadmat(filename_adhd)
