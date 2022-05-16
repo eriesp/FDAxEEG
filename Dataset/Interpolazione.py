@@ -21,9 +21,9 @@ import scipy
 
 #canale=input('Canale: ')
 #banda=input('Banda: ')
-banda=str(1)
+banda=str(4)
 p=[]
-for i in np.arange(1,2):
+for i in np.arange(1,8):
     canale=str(i)
     filename_adhd = r"C:\Users\Asus\OneDrive\Desktop\NL2\FDAxEEG\Dataset\ADHD_Matrici_medie\zona"+canale+"_p"+banda
     mat = scipy.io.loadmat(filename_adhd)
@@ -61,11 +61,11 @@ for i in np.arange(1,2):
     # Etichette=np.append(np.zeros(427),np.ones(555))
     # Dati=np.concatenate((PSD_control,PSD_ADHD),axis=0)
 
-    Picco_ADHD=ADHD.data_matrix.max(1)
-    Picco_Control=Control.data_matrix.max(1)
+    # Picco_ADHD=ADHD.data_matrix.max(1)
+    # Picco_Control=Control.data_matrix.max(1)
 
-    v_n, p_val = f_oneway(Picco_Control, Picco_ADHD)
-    p.append(p_val)
-
-    # v_n, p_val = oneway_anova(Picco_Control,Picco_ADHD)
+    # v_n, p_val = f_oneway(Picco_Control, Picco_ADHD)
     # p.append(p_val)
+
+    v_n, p_val = oneway_anova(Control, ADHD)
+    p.append(p_val)
