@@ -6,12 +6,12 @@ Created on Sat May  7 16:36:04 2022
 """
 
 import numpy as np
+from scipy.stats import f_oneway
 # import mne
 #from tqdm import tqdm
 # from tqdm import tqdm
 import skfda
 import pandas as pd
-from sklearn.linear_model import LogisticRegression
 from skfda.inference.anova import oneway_anova
 import scipy
 
@@ -21,9 +21,9 @@ import scipy
 
 #canale=input('Canale: ')
 #banda=input('Banda: ')
-banda=str(1)
+banda=str(5)
 p=[]
-for i in np.arange(1,2):
+for i in np.arange(1,8):
     canale=str(i)
     filename_adhd = r"C:\Users\Asus\OneDrive\Desktop\NL2\FDAxEEG\Dataset\ADHD_Matrici_medie\zona"+canale+"_p"+banda
     mat = scipy.io.loadmat(filename_adhd)
@@ -49,39 +49,23 @@ for i in np.arange(1,2):
 
     Control.plot()
     
-    ADHD_der=ADHD.derivative()
-    ADHD_der.plot()
+    # ADHD_der=ADHD.derivative()
+    # ADHD_der.plot()
     
-    Control_der=Control.derivative()
-    Control_der.plot()
+    # Control_der=Control.derivative()
+    # Control_der.plot()
     
-    Control_der.data_matrix=np.abs(Control_der.data_matrix)
-    a=Control_der.integrate()
+    # Control_der.data_matrix=np.abs(Control_der.data_matrix)
+    # a=Control_der.integrate()
 
-    Etichette=np.append(np.zeros(427),np.ones(555))
-    Dati=np.concatenate((PSD_control,PSD_ADHD),axis=0)
+    # Etichette=np.append(np.zeros(427),np.ones(555))
+    # Dati=np.concatenate((PSD_control,PSD_ADHD),axis=0)
 
-    df_Channel=pd.DataFrame(data=Dati)
-    Channel=df_Channel.to_numpy(dtype=None, copy=False)
-    Channel = np.nan_to_num(Channel)
-    Misto=skfda.FDataGrid(data_matrix=Channel)
-    Misto.interpolation=skfda.representation.interpolation.SplineInterpolation(interpolation_order=3)
+    Picco_ADHD=ADHD.data_matrix.max(1)
+    Picco_Control=Control.data_matrix.max(1)
 
-    Misto.plot()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    v_n, p_val = oneway_anova(Control,ADHD)
+    v_n, p_val = f_oneway(Picco_Control, Picco_ADHD)
     p.append(p_val)
+
+    # v_n, p_val = oneway_anova(Picco_Control,Picco_ADHD)
+    # p.append(p_val)
