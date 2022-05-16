@@ -169,6 +169,8 @@ for comp = 1:5
     save(append('ADHD_Matrici_medie/zona7_p',string(comp)),'avg','f')
 end
 
+%% Control
+
 %Prefrontale
 for comp = 1:5
     filename=append('Control_Matrici_pyulear/ch',string(1),'_p',string(comp));
@@ -181,7 +183,7 @@ for comp = 1:5
     fp2=mat_2.p;
     fp2=fp2';
     
-    avg=zeros(555,129);
+    avg=zeros(427,129);
     for ii = 1:length(fp2)
         signals=[fp1(ii,:); fp2(ii,:)];
         avg(ii,:)=mean(signals);
@@ -189,8 +191,6 @@ for comp = 1:5
     
     save(append('Control_Matrici_medie/zona1_p',string(comp)),'avg','f')
 end
-
-%% CONTROL
 
 %Frontale
 for comp = 1:5
