@@ -1,24 +1,33 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat May  7 16:36:04 2022
+Created on Tue May 17 12:45:08 2022
 
 @author: Asus
 """
 
+# loading the packages
 import numpy as np
-import os
-from scipy.stats import f_oneway
+from tqdm import tqdm
 import skfda
 import pandas as pd
+import os
+# from skfda.exploratory.visualization import Boxplot
 from skfda.inference.anova import oneway_anova
 import scipy
+import os
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import  train_test_split
+import matplotlib.pyplot as plt
+from scipy.stats import permutation_test
 from skfda.ml.classification import LogisticRegression
 from numpy import array
 
 home_path = os.path.abspath(os.getcwd())
 home_path
 
-def LogReg(canale, banda, home_path):
+def FAnova(canale, banda, home_path):
+    
+    # loading the data of ADHD
     filename_adhd = home_path+"\ADHD_Matrici_medie\zona"+str(canale)+"_p"+str(banda)
     mat = scipy.io.loadmat(filename_adhd)
     PSD_ADHD=mat['avg']
@@ -28,35 +37,31 @@ def LogReg(canale, banda, home_path):
     ADHD=skfda.FDataGrid(data_matrix=Channel)
     ADHD.interpolation=skfda.representation.interpolation.SplineInterpolation(interpolation_order=3)
 
-
+    # loading the data of control
     filename_control = home_path+"\Control_Matrici_medie\zona"+str(canale)+"_p"+str(banda)
     mat = scipy.io.loadmat(filename_control)
-    
     PSD_control=mat['avg']
-        
     df_Channel=pd.DataFrame(data=PSD_control)
     Channel=df_Channel.to_numpy(dtype=None, copy=False)
     Channel = np.nan_to_num(Channel)
     Control=skfda.FDataGrid(data_matrix=Channel)
     Control.interpolation=skfda.representation.interpolation.SplineInterpolation(interpolation_order=3)
 
-    
-    dati = ADHD.concatenate(Control)
-    y = 555*[1] + 427*[0]
+    v_n, p_val = oneway_anova(Control, ADHD)
 
-    lr = LogisticRegression()
-    lr.__init__(p=5, solver='lbfgs', max_iter=100)
-    _ = lr.fit(dati[::2], y[::2])
-    lr.coef_.round(2)
-    lr.points_.round(2)
-    score=lr.score(dati[1::2],y[1::2])
-    
-    return score
+    return p_val
 
-score = np.empty((7,5))
+p_val = np.empty((7,5))
 
 for canale in range(1,8):
     for banda in range(1,6):
-        score[(canale-1), (banda-1)] = LogReg(canale, banda, home_path) 
+        p_val[(canale-1), (banda-1)] = FAnova(canale, banda, home_path) 
+        
+print(pd.DataFrame(p_val))
 
-print(pd.DataFrame(score))
+
+
+
+
+
+
