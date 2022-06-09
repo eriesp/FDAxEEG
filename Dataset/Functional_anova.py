@@ -59,9 +59,8 @@ for canale in range(1,8):
         
 print(pd.DataFrame(p_val))
 
-
-
-
-
-
-
+for canale in range(7):
+    for banda in range(5):
+        print("canale = "+str(canale)+', banda = '+str(banda))
+        print(str.format('{0:.50f}', p_val[canale,banda]))
+        print('=============================================')
