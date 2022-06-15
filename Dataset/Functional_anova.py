@@ -21,6 +21,10 @@ import matplotlib.pyplot as plt
 from scipy.stats import permutation_test
 from skfda.ml.classification import LogisticRegression
 from numpy import array
+from skfda.preprocessing.dim_reduction import FPCA
+from skfda.exploratory.visualization import FPCAPlot
+from skfda.representation.basis import BSpline, Fourier, Monomial
+
 
 home_path = os.path.abspath(os.getcwd())
 home_path
@@ -48,6 +52,12 @@ def FAnova(canale, banda, home_path):
     Control.interpolation=skfda.representation.interpolation.SplineInterpolation(interpolation_order=3)
 
     v_n, p_val = oneway_anova(Control, ADHD)
+    
+    dati = ADHD.concatenate(Control)
+    
+    fpca = FPCA(n_components=5)
+    fpca.fit(dati)
+    fpca.components_.plot()
 
     return p_val
 
