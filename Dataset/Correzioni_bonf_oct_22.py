@@ -191,12 +191,15 @@ matrice_int_cont = np.empty((427,indxs.size))
 
 # salvo le features di mio interesse
 # della zona e banda di mio interesse devo avere vettore integrali di adhd e vettore integrali di control
+print('Integral:')
 for i,indx in enumerate(indxs):
     zona = indx//5
     banda = indx - indx//5*5
     int_adhd, int_cont = Integrale(canale=zona+1,  banda=banda+1, home_path=home_path)
     matrice_int_adhd[:,i] = int_adhd
     matrice_int_cont[:,i] = int_cont
+
+    print('Zona: '+str(zona)+'\tBanda: '+str(banda))
     
 mat_int_adhd = pd.DataFrame(matrice_int_adhd)
 mat_int_cont = pd.DataFrame(matrice_int_cont)
@@ -224,12 +227,15 @@ matrice_norm_cont = np.empty((427,indxs.size))
 
 # salvo le features di mio interesse
 # della zona e banda di mio interesse devo avere vettore integrali di adhd e vettore integrali di control
+print('Norm:')
 for i,indx in enumerate(indxs):
     zona = indx//5
     banda = indx - indx//5*5
     norm_adhd, norm_cont = Norma(canale=zona+1,  banda=banda+1, home_path=home_path)
     matrice_norm_adhd[:,i] = norm_adhd
     matrice_norm_cont[:,i] = norm_cont
+
+    print('Zona: '+str(zona)+'\tBanda: '+str(banda))
 
 pd.DataFrame(matrice_norm_adhd).to_csv(home_path+'\Bonf_Feat_norm_adhd.csv', index = False, sep = ',')
 pd.DataFrame(matrice_norm_cont).to_csv(home_path+'\Bonf_Feat_norm_cont.csv', index = False, sep = ',')
@@ -254,6 +260,7 @@ matrice_picco_cont = np.empty((427,indxs.size))
 
 # salvo le features di mio interesse
 # della zona e banda di mio interesse devo avere vettore integrali di adhd e vettore integrali di control
+print('Max:')
 for i,indx in enumerate(indxs):
     zona = indx//5
     banda = indx - indx//5*5
