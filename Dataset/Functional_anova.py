@@ -18,12 +18,12 @@ import os
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import  train_test_split
 import matplotlib.pyplot as plt
-from scipy.stats import permutation_test
-from skfda.ml.classification import LogisticRegression
+#from scipy.stats import permutation_test
+#from skfda.ml.classification import LogisticRegression
 from numpy import array
-from skfda.preprocessing.dim_reduction import FPCA
-from skfda.exploratory.visualization import FPCAPlot
-from skfda.representation.basis import BSpline, Fourier, Monomial
+#from skfda.preprocessing.dim_reduction import FPCA
+#from skfda.exploratory.visualization import FPCAPlot
+#from skfda.representation.basis import BSpline, Fourier, Monomial
 
 
 home_path = os.path.abspath(os.getcwd())
@@ -55,9 +55,9 @@ def FAnova(canale, banda, home_path):
     
     dati = ADHD.concatenate(Control)
     
-    fpca = FPCA(n_components=5)
-    fpca.fit(dati)
-    fpca.components_.plot()
+    # fpca = FPCA(n_components=5)
+    # fpca.fit(dati)
+    # fpca.components_.plot()
 
     return p_val
 
