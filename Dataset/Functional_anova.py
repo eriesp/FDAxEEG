@@ -66,8 +66,12 @@ p_val = np.empty((7,5))
 for canale in range(1,8):
     for banda in range(1,6):
         p_val[(canale-1), (banda-1)] = FAnova(canale, banda, home_path) 
+
         
 print(pd.DataFrame(p_val))
+
+print("p_values corretti con Bonferroni")
+print(pd.DataFrame(p_val*35))
 
 for canale in range(7):
     for banda in range(5):
