@@ -14,6 +14,7 @@ import os
 # from skfda.exploratory.visualization import Boxplot
 from skfda.inference.anova import oneway_anova
 import scipy
+
 import os
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import  train_test_split
@@ -67,14 +68,18 @@ for canale in range(1,8):
     for banda in range(1,6):
         p_val[(canale-1), (banda-1)] = FAnova(canale, banda, home_path) 
 
+df_pval = pd.DataFrame(p_val)
         
-print(pd.DataFrame(p_val))
+print(df_pval)
+
+df_pval.to_csv("p_val_functional")
 
 print("p_values corretti con Bonferroni")
-print(pd.DataFrame(p_val*35))
+
 
 for canale in range(7):
     for banda in range(5):
         print("canale = "+str(canale)+', banda = '+str(banda))
         print(str.format('{0:.50f}', p_val[canale,banda]))
         print('=============================================')
+
