@@ -72,7 +72,7 @@ df_pval = pd.DataFrame(p_val)
         
 print(df_pval)
 
-df_pval.to_csv("p_val_functional")
+df_pval.to_csv("p_val_functional.csv")
 
 print("p_values corretti con Bonferroni")
 
